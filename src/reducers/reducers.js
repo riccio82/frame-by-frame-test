@@ -11,11 +11,13 @@ function initApp(state, action) {
     switch (action.type) {
         case PLAY_VIDEO:
             return {
-                    videoState: action.type
+                videoState: action.type,
+                seekTo: undefined
                 };
         case STOP_VIDEO:
             return {
-                    videoState: action.type
+                    videoState: action.type,
+                    seekTo: action.seek
                 };
         case SEEK:
             return {

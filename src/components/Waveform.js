@@ -33,11 +33,13 @@ class Waveform extends Component {
         });
         this.waveform.on('play',  () =>{
             console.log("Pause Time ", this.waveform.getCurrentTime());
+            this.props.seekVideo(this.waveform.getCurrentTime())
             this.props.playVideo();
         });
         this.waveform.on('pause',  () =>{
             console.log("Wave Pause Time ", this.waveform.getCurrentTime());
-            this.props.stopVideo();
+            this.props.stopVideo(this.waveform.getCurrentTime());
+            this.props.seekVideo(this.waveform.getCurrentTime())
         });
     };
 

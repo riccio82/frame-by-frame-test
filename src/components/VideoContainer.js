@@ -14,7 +14,7 @@ class VideoContainer extends Component {
     }
 
     render() {
-        return ( <div id="video-container">
+        return ( <div id="video-container" data-state={this.props.videoState}>
             <ReactPlayer
                 url='public/video/1700508311.mp4'
                 playing={this.props.videoState === PLAY_VIDEO }

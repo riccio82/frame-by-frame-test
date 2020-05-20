@@ -5,7 +5,7 @@ module.exports = {
     output: {
         filename: 'main.js',
         path: path.resolve('build'),
-        publicPath: '/'
+        publicPath: ''
     },
     module: {
         rules: [
