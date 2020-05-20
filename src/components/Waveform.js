@@ -11,7 +11,7 @@ class Waveform extends Component {
 
     componentDidMount() {
         // const track = document.querySelector('#track');
-        const url = '/public/video/1700508311.mp4';
+        const url = 'public/video/1700508311.mp4';
         // const url = 'https://zhw2590582.github.io/assets-cdn/video/your-name.mp4';
         this.waveform = WaveSurfer.create({
             container: '#waveform',
