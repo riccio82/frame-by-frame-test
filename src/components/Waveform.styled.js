@@ -21,6 +21,7 @@ export const WaveButtons = styled.div`
     justify-content: center;
     height: 100px;  width: 100%;
     background: transparent;
+    margin-bottom: 50px;
 `;
 
 export const PlayButton = styled.button`

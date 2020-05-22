@@ -1,14 +1,15 @@
 import React from 'react';
-import Waveform from './components/Waveform';
 import './App.scss';
 import VideoContainer from "./components/VideoContainer";
+import PeakWave from "./components/PeakWave";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
             <VideoContainer/>
-            <Waveform/>
+            {/*<Waveform/>*/}
+            <PeakWave/>
       </header>
     </div>
   );

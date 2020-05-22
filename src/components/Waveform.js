@@ -11,7 +11,7 @@ class Waveform extends Component {
 
     componentDidMount() {
         // const track = document.querySelector('#track');
-        const url = 'public/video/1700508311.mp4';
+        const url = 'public/video/video.mp4';
         // const url = 'https://zhw2590582.github.io/assets-cdn/video/your-name.mp4';
         this.waveform = WaveSurfer.create({
             container: '#waveform',
@@ -51,7 +51,7 @@ class Waveform extends Component {
 
     nextFrame = () => {
         let currentTime = this.waveform.getCurrentTime();
-        let nextFrameTime = currentTime + parseFloat(parseFloat(1/30).toFixed(6)); //Frame rate di 30fps
+        let nextFrameTime = currentTime + parseFloat(parseFloat(1/24).toFixed(6)); //Frame rate di 30fps
         // this.waveform.seekTo(currentTime/this.waveform.getDuration());
 
         console.log("currentTime", currentTime);
@@ -62,8 +62,8 @@ class Waveform extends Component {
     };
     prevFrame = () => {
         let currentTime = this.waveform.getCurrentTime();
-        let prevFrameTime = currentTime - parseFloat(parseFloat(2/30).toFixed(6)); //Frame rate di 30fps
-        let stopFrame = currentTime - parseFloat(parseFloat(1/30).toFixed(6)); //Frame rate di 30fps
+        let prevFrameTime = currentTime - parseFloat(parseFloat(2/24).toFixed(6)); //Frame rate di 30fps
+        let stopFrame = currentTime - parseFloat(parseFloat(1/24).toFixed(6)); //Frame rate di 30fps
         // currentTime > 0 && this.waveform.seekTo(currentTime/this.waveform.getDuration());
 
         if ( prevFrameTime < 0 || stopFrame < 0 ) {
