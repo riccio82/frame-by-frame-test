@@ -134,7 +134,7 @@ class PeakWave extends Component {
                     </PlayButton>
                 </WaveButtons>
 
-                <audio id={'audio-element'} src={'/public/video/video.mp3'}/>
+                <audio id={'audio-element'} src={'../../public/video/video.mp3'}/>
                 <div id={'waveform-container'}/>
 
             </div>
