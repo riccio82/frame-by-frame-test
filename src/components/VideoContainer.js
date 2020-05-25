@@ -21,7 +21,7 @@ class VideoContainer extends Component {
                 playing={this.props.videoState === PLAY_VIDEO }
                 config={{ file: {
                         tracks: [
-                            {kind: 'subtitles', src: 'public/video/subtitle.vtt', srcLang: 'en', default: true}
+                            {kind: 'subtitles', src: 'public/video/subtitles.vtt', srcLang: 'en', default: true}
                         ]
                     }}}
                 controls={false}
