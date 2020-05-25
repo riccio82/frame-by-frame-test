@@ -1,29 +1,43 @@
-import { PLAY_VIDEO, STOP_VIDEO, SEEK } from '../actions/actions'
+import { PLAY_VIDEO, STOP_VIDEO, SEEK, SEEK_SUB } from '../actions/actions'
+import subtitleObj from '../components/subtitle';
+import Immutable from 'immutable';
 
 const initialState = {
-    videoState: STOP_VIDEO
+    videoState: STOP_VIDEO,
+    seekTo: null,
+    subtitles: Immutable.fromJS(subtitleObj),
+    activeSubtitle: 0
 };
-
+function findActiveSubtitle(subtitles, seek) {
+    const subtitle = subtitles.find((sub)=> (sub.get('start') <= seek && sub.get('end') >= seek) );
+    return (subtitle ? subtitle.get('id') : undefined)
+}
 function initApp(state, action) {
     if (typeof state === 'undefined') {
         return initialState
     }
     switch (action.type) {
         case PLAY_VIDEO:
-            return {
+            return Object.assign({}, state,{
                 videoState: action.type,
-                seekTo: undefined
-                };
+                seekTo: undefined,
+
+                });
         case STOP_VIDEO:
-            return {
+            return Object.assign({}, state,{
                     videoState: action.type,
                     seekTo: action.seek
-                };
+                });
         case SEEK:
-            return {
+            return Object.assign({}, state,{
                 videoState: state.videoState,
-                seekTo: action.seek
-            };
+                seekTo: action.seek,
+                activeSubtitle: findActiveSubtitle(state.subtitles, action.seek)
+            });
+        case SEEK_SUB:
+            return Object.assign({}, state,{
+                activeSubtitle: findActiveSubtitle(state.subtitles, action.seek)
+            });
         default:
             return state
     }

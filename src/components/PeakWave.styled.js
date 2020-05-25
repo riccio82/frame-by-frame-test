@@ -1,19 +1,5 @@
 import styled from 'styled-components';
 
-export const WaveformContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100px;  width: 100%;
-    background: transparent;
-`;
-
-export const Wave = styled.div`
-    width: 90%;
-    height: 150px;
-`;
-
 export const WaveButtons = styled.div`
     display: flex;
     flex-direction: row;

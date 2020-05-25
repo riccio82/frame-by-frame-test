@@ -2,15 +2,21 @@ import React from 'react';
 import './App.scss';
 import VideoContainer from "./components/VideoContainer";
 import PeakWave from "./components/PeakWave";
+import Subtitles from "./components/Subtitles";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-            <VideoContainer/>
+      <div className="App-header">
+          <div className='app-top'>
+              <Subtitles/>
+              <VideoContainer/>
+          </div>
+          <div className='app-bottom'>
+              <PeakWave/>
+          </div>
             {/*<Waveform/>*/}
-            <PeakWave/>
-      </header>
+      </div>
     </div>
   );
 }

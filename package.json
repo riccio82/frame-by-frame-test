@@ -18,7 +18,8 @@
     "redux": "^4.0.5",
     "styled-components": "^5.1.0",
     "wavesurfer.js": "^3.3.3",
-    "peaks.js": "^0.21.0"
+    "peaks.js": "^0.21.0",
+    "immutable": "^4.0.0-rc.12"
   },
   "scripts": {
     "start": "webpack-dev-server --open --mode development",

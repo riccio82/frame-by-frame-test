@@ -3,27 +3,67 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #b1b2b3;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-div#video-container {
-  padding-bottom: 60px;
-  padding-top: 60px;
-}
-
-div.peak-container {
-  display: flex;
-  width: 80%;
-  height: 200px;
-  margin-top: 50px;
-  flex-direction: column;
-  #waveform-container, .waveform, .zoom-container {
+  .app-top {
+    display: flex;
     width: 100%;
-    height: 100%;
+    align-items: center;
+    flex-direction: row;
+    padding-top: 40px;
+    .subtitles-container {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      height: 500px;
+      .subtitles-list {
+        position: relative;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        width: 70%;
+        margin: 0 auto;
+        .subtitle {
+          width: 100%;
+          height: 100px;
+          color: black;
+          border: 1px solid grey;
+          display: block;
+          font-size: 15px;
+          &.active {
+            color: blue;
+          }
+        }
+      }
+    }
+    div#video-container {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      margin: 0 auto;
+      max-width: 1024px;
+      margin-right: 20px;
+    }
+  }
+  .app-bottom {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: row;
+    padding-top: 40px;
+    align-content: center;
+    .peak-container {
+      width: 80%;
+      margin: 0 auto;
+    }
+    #waveform-container, .waveform, .zoom-container {
+      width: 100%;
+      height: 100%;
+      background-color: white;
+    }
   }
 }

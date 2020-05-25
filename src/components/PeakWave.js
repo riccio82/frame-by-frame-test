@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import {playVideo, stopVideo, seekVideo, PLAY_VIDEO} from '../actions/actions';
+import {playVideo, stopVideo, seekVideo, seekSubtitle, PLAY_VIDEO} from '../actions/actions';
 import { connect } from 'react-redux'
 import Peaks from 'peaks.js';
 import _ from "lodash";
-import {PlayButton, WaveButtons} from "./Waveform.styled";
-import subtitleObj from './subtitle';
+import {PlayButton, WaveButtons} from "./PeakWave.styled";
 
 class PeakWave extends Component {
 
@@ -15,7 +14,8 @@ class PeakWave extends Component {
 
     generateSegments = () => {
         let segments = [];
-        _.forEach(subtitleObj, (sub)=>{
+        this.props.subtitlesObj.forEach((subI)=>{
+            const sub = subI.toJS();
             segments.push({
                 startTime: sub.start,
                 endTime: sub.end,
@@ -28,15 +28,9 @@ class PeakWave extends Component {
     };
 
     componentDidMount() {
-        console.log(subtitleObj);
         this.audiography = {
             audioElement: document.querySelector('#audio-element'),
             currentSegmentToAdd: '',
-            playAudio: ()=>{
-                if(this.audiography.audioElement.paused){
-                    this.audiography.audioElement.play()
-                }
-            },
             playPauseAudio: ()=>{
                 if(this.audiography.audioElement.paused){
                     this.audiography.audioElement.play();
@@ -46,11 +40,6 @@ class PeakWave extends Component {
                     this.props.stopVideo();
                 }
             },
-            pauseAudio: ()=>{
-                if(!this.audiography.audioElement.paused){
-                    this.audiography.audioElement.pause()
-                }
-            },
             seek: (time)=>{
                 console.log(this.audiography.audioElement.duration);
                 this.audiography.audioElement.currentTime = time;
@@ -58,19 +47,27 @@ class PeakWave extends Component {
                 console.log(this.audiography.audioElement.currentTime);
             },
         };
+
         this.peak = Peaks.init({
             container: document.querySelector('#waveform-container'),
             mediaElement: this.audiography.audioElement,
             dataUri:  {
                 arraybuffer: 'public/video/video.dat'
             },
-            // zoomLevels: [256],
-            segments: this.generateSegments()
+            zoomLevels: [512],
+            segments: this.generateSegments(),
         }, (err)=> {
-                // audiography.playAudio()
-            });
+            const view = this.peak.views.getView('zoomview');
+            view.setWaveformColor('#5e5e5e');
+            const container = document.getElementsByClassName('overview-container');
+            container[0].style.display = 'none';
+        });
 
-        this.peak.on('player.seeked', (time)=>this.props.seekVideo(time))
+        this.peak.on('player.seeked', (time)=>this.props.seekVideo(time));
+
+        this.peak.on('player.timeupdate', (time)=>this.props.seekSubtitle(time));
+
+
     };
 
     handlePlay = () => {
@@ -82,10 +79,7 @@ class PeakWave extends Component {
     nextFrame = () => {
         let currentTime = this.peak.player.getCurrentTime();
         let nextFrameTime = currentTime + parseFloat(parseFloat(1/24).toFixed(6)); //Frame rate di 30fps
-        // this.waveform.seekTo(currentTime/this.waveform.getDuration());
 
-        console.log("currentTime", currentTime);
-        console.log("nextFrameTime", nextFrameTime);
         this.peak.segments.add({
             startTime: currentTime,
             endTime: nextFrameTime,
@@ -118,6 +112,10 @@ class PeakWave extends Component {
         }
     };
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+    }
+
     render() {
 
 
@@ -134,7 +132,7 @@ class PeakWave extends Component {
                     </PlayButton>
                 </WaveButtons>
 
-                <audio id={'audio-element'} src={'../../public/video/video.mp3'}/>
+                <audio id={'audio-element'} src={'public/video/video.mp3'}/>
                 <div id={'waveform-container'}/>
 
             </div>
@@ -142,7 +140,14 @@ class PeakWave extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    const {subtitles} = state;
+    return {
+        subtitlesObj: subtitles
+    };
+};
+
 export default connect(
-    null,
-    { playVideo, stopVideo, seekVideo }
+    mapStateToProps,
+    { playVideo, stopVideo, seekVideo, seekSubtitle }
 )(PeakWave)

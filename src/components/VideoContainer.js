@@ -16,9 +16,15 @@ class VideoContainer extends Component {
     render() {
         return ( <div id="video-container" data-state={this.props.videoState}>
             <ReactPlayer
+                ref={(video)=>this.video=video}
                 url='public/video/video.mp4'
                 playing={this.props.videoState === PLAY_VIDEO }
-                controls={false} ref={(video)=>this.video=video}
+                config={{ file: {
+                        tracks: [
+                            {kind: 'subtitles', src: 'public/video/subtitle.vtt', srcLang: 'en', default: true}
+                        ]
+                    }}}
+                controls={false}
                 muted={true}
                 progressInterval={10}
                 // onProgress={(data)=>console.log("Played", data.playedSeconds)}
