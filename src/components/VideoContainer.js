@@ -19,6 +19,8 @@ class VideoContainer extends Component {
                 ref={(video)=>this.video=video}
                 url='public/video/video.mp4'
                 playing={this.props.videoState === PLAY_VIDEO }
+                width={'820'}
+                height={'auto'}
                 config={{ file: {
                         tracks: [
                             {kind: 'subtitles', src: 'public/video/subtitles.vtt', srcLang: 'en', default: true}

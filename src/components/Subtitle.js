@@ -6,7 +6,8 @@ class Subtitle extends Component {
 
     render() {
         const {subtitle, active} = this.props;
-        return ( <li ref={(ref)=>this.ref=ref} className={'subtitle ' + (active ? " active": "")}>{subtitle.content.join()}</li> )
+        return ( <li ref={(ref)=>this.ref=ref} className={'subtitle ' + (active ? " active": "")}>
+            {subtitle.content.join()}</li> )
     }
 }
 

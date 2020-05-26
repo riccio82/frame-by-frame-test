@@ -27,6 +27,9 @@
         overflow-x: hidden;
         width: 70%;
         margin: 0 auto;
+        border-top: 1px solid grey;
+        border-bottom: 1px solid grey;
+        padding-left: 0px;
         .subtitle {
           width: 100%;
           height: 100px;
@@ -44,7 +47,6 @@
       display: flex;
       flex-direction: column;
       width: 50%;
-      margin: 0 auto;
       max-width: 1024px;
       margin-right: 20px;
     }
