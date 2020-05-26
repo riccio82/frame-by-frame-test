@@ -37,8 +37,32 @@
           border: 1px solid grey;
           display: block;
           font-size: 15px;
+          position: relative;
           &.active {
             color: blue;
+          }
+          .start-time {
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+
+          .end-time {
+            position: absolute;
+            top: 0;
+            left: 105px;
+          }
+
+          .id {
+            position: absolute;
+            top: 40px;
+            left: 0px;
+          }
+          .content {
+            margin: 30px;
+            p {
+              margin: 0.5em 0px;
+            }
           }
         }
       }
@@ -61,6 +85,10 @@
     .peak-container {
       width: 80%;
       margin: 0 auto;
+      margin-bottom: 50px;
+    }
+    #zoomview-container {
+      height: 300px
     }
     #waveform-container, .waveform, .zoom-container {
       width: 100%;

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {playVideo, stopVideo, seekVideo, seekSubtitle, PLAY_VIDEO} from '../actions/actions';
+import {playVideo, stopVideo, seekVideo, seekSubtitle} from '../actions/actions';
 import { connect } from 'react-redux'
 import Peaks from 'peaks.js';
 import _ from "lodash";
 import {PlayButton, WaveButtons} from "./PeakWave.styled";
+import CustomSegmentMarker from "./CustomSegmentMarker";
 
 class PeakWave extends Component {
 
@@ -12,7 +13,7 @@ class PeakWave extends Component {
         playing: false,
     };
 
-    generateSegments = () => {
+    generateSubtitleSegments = () => {
         let segments = [];
         this.props.subtitlesObj.forEach((subI)=>{
             const sub = subI.toJS();
@@ -20,12 +21,38 @@ class PeakWave extends Component {
                 startTime: sub.start,
                 endTime: sub.end,
                 id: sub.id,
-                labelText: sub.content[0],
-                editable: true
+                labelText: sub.id,
+                editable: true,
+                color: '#5e5e5e',
+                sub: sub
             })
         });
         return segments;
     };
+    generateCtmSegments = () => {
+        let segments = [];
+        this.props.videoCtm.forEach((ctm)=>{
+            segments.push({
+                startTime: ctm.start,
+                endTime: ctm.end,
+                id: "CTM:" +ctm.id,
+                labelText: "CTM:"+ ctm.id,
+                editable: true,
+                color: 'rgba(94,94,94,0.46)',
+                ctm: ctm
+            })
+        });
+        return segments;
+    };
+
+    createSegmentMarker = (options) => {
+        if (options.view === 'zoomview') {
+            return new CustomSegmentMarker(options);
+        }
+
+        // return null;
+    }
+
 
     componentDidMount() {
         this.audiography = {
@@ -49,18 +76,35 @@ class PeakWave extends Component {
         };
 
         this.peak = Peaks.init({
-            container: document.querySelector('#waveform-container'),
+            containers: {
+                zoomview: document.getElementById('zoomview-container'),
+            },
             mediaElement: this.audiography.audioElement,
             dataUri:  {
-                arraybuffer: 'public/video/video.dat'
+                arraybuffer: 'public/video/video.dat',
+                json: 'public/video/audiowave.json'
+
             },
-            zoomLevels: [512],
-            segments: this.generateSegments(),
-        }, (err)=> {
+            zoomLevels: [256],
+            // keyboard: true,
+            segments: this.generateSubtitleSegments(),
+            createSegmentMarker: this.createSegmentMarker
+        }, (err, peaksInstance)=> {
+            if (err) {
+                console.error(err.message);
+                return;
+            }
             const view = this.peak.views.getView('zoomview');
-            view.setWaveformColor('#5e5e5e');
-            const container = document.getElementsByClassName('overview-container');
-            container[0].style.display = 'none';
+            view.setWaveformColor('rgba(94,94,94,0.46)');
+            view.setTimeLabelPrecision(3);
+            view.setAmplitudeScale(0.75);
+            const ctmObj = this.generateCtmSegments();
+            ctmObj.forEach((seg)=>{
+                peaksInstance.segments.add(seg);
+            });
+
+            // const container = document.getElementsByClassName('overview-container');
+            // container[0].style.display = 'none';
         });
 
         this.peak.on('player.seeked', (time)=>this.props.seekVideo(time));
@@ -133,7 +177,9 @@ class PeakWave extends Component {
                 </WaveButtons>
 
                 <audio id={'audio-element'} src={'public/video/video.mp3'}/>
-                <div id={'waveform-container'}/>
+                <div id={'waveform-container'}>
+                    <div id="zoomview-container"/>
+                </div>
 
             </div>
         );
@@ -141,9 +187,10 @@ class PeakWave extends Component {
 }
 
 const mapStateToProps = state => {
-    const {subtitles} = state;
+    const {subtitles, videoCtm} = state;
     return {
-        subtitlesObj: subtitles
+        subtitlesObj: subtitles,
+        videoCtm
     };
 };
 

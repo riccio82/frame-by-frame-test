@@ -1,12 +1,14 @@
 import { PLAY_VIDEO, STOP_VIDEO, SEEK, SEEK_SUB } from '../actions/actions'
 import subtitleObj from '../components/subtitle';
+import videoCtm from '../../public/video/videoCtm.json';
 import Immutable from 'immutable';
 
 const initialState = {
     videoState: STOP_VIDEO,
     seekTo: null,
     subtitles: Immutable.fromJS(subtitleObj),
-    activeSubtitle: 0
+    activeSubtitle: 0,
+    videoCtm: videoCtm
 };
 function findActiveSubtitle(subtitles, seek) {
     const subtitle = subtitles.find((sub)=> (sub.get('start') <= seek && sub.get('end') >= seek) );

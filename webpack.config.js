@@ -2,10 +2,13 @@ const path = require('path')
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+    watchOptions: {
+        ignored: [/node_modules/, /public/]
+    },
     output: {
         filename: 'main.js',
         path: path.resolve('build'),
-        publicPath: ''
+        publicPath: '/'
     },
     module: {
         rules: [
