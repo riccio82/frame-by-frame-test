@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-fs.readFile('../../public/video/subtitle.srt', function(error, data) {
+fs.readFile('../../public/video/subtitles_ita.srt', function(error, data) {
     if(error)
         throw error;
 
@@ -31,7 +31,7 @@ fs.readFile('../../public/video/subtitle.srt', function(error, data) {
         }
     });
 
-    fs.writeFile('../../public/video/subtitle.json', JSON.stringify(output), (err) => {
+    fs.writeFile('../../public/video/subtitle_ita.json', JSON.stringify(output), (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
     });

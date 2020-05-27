@@ -23,7 +23,7 @@ class VideoContainer extends Component {
                 height={'auto'}
                 config={{ file: {
                         tracks: [
-                            {kind: 'subtitles', src: 'public/video/subtitles.vtt', srcLang: 'en', default: true}
+                            {kind: 'subtitles', src: 'public/video/subtitles_ita.vtt', srcLang: 'en', default: true}
                         ]
                     }}}
                 controls={false}
