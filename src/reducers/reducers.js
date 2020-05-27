@@ -1,5 +1,5 @@
 import { PLAY_VIDEO, STOP_VIDEO, SEEK, SEEK_SUB } from '../actions/actions'
-import subtitleObj from '../../public/video/subtitle_ita';
+import subtitleObj from '../../build/public/video/subtitle_ita';
 import videoCtm from '../../public/video/videoCtm.json';
 import Immutable from 'immutable';
 
