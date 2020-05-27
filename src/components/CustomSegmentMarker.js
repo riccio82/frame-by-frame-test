@@ -62,7 +62,7 @@ class CustomSegmentMarker {
                 y: 5,
                 width: ctm.duration * 175,
                 height: 30,
-                fill: 'rgba(93,186,98,0.88)',
+                fill: 'rgba(23,49,186,0.90)',
                 strokeWidth: 4
             });
 
@@ -84,12 +84,6 @@ class CustomSegmentMarker {
             group.add(this._rect1);
             group.add(this._label1);
         }
-
-
-
-
-
-
 
         this.fitToView();
         this.bindEventHandlers();
@@ -117,9 +111,10 @@ class CustomSegmentMarker {
             container.style.cursor = 'move';
         });
 
-        this._group.on('click', function() {
+        this._group.on('drag', function(e) {
             debugger
-            container.style.cursor = 'move';
+            e.preventDefault();
+            return false;
         });
 
         this._group.on('mouseleave', function() {
